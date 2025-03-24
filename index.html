@@ -6,17 +6,23 @@
   <body>
     <h2>Sending Cross-Origin DELETE Request</h2>
     <p>If the CORS misconfig exists, the response below should show something instead of a CORS error:</p>
-    <script>
-      fetch("https://pix.secretservice.gov/errors/page-not-found", {
-        method: "DELETE"
-      })
-      .then(res => res.text())
-      .then(text => {
-        document.body.innerHTML += "<pre>" + text + "</pre>";
-      })
-      .catch(err => {
-        document.body.innerHTML += "<pre>Error: " + err + "</pre>";
-      });
-    </script>
+   <script>
+  fetch("https://pix.secretservice.gov/errors/page-not-found", {
+    method: "DELETE",
+    mode: "cors",
+    credentials: "include"
+  })
+  .then(response => {
+    document.body.innerHTML += `<p><strong>Status:</strong> ${response.status}</p>`;
+    return response.text();
+  })
+  .then(text => {
+    document.body.innerHTML += "<h4>Response:</h4><pre>" + text + "</pre>";
+  })
+  .catch(err => {
+    document.body.innerHTML += "<h4>Error:</h4><pre>" + err + "</pre>";
+  });
+</script>
+
   </body>
 </html>
